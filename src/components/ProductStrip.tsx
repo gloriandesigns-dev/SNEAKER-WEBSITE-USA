@@ -1,12 +1,11 @@
-import React, { useRef } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import { cn } from '../lib/utils';
 
-interface Product {
+export interface Product {
   id: number;
   name: string;
   price: string;
-  image: string;
+  images: string[];
   badge?: boolean;
 }
 
@@ -16,23 +15,71 @@ interface ProductStripProps {
   className?: string;
 }
 
-export const ProductStrip = ({ title, products, className }: ProductStripProps) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
+const ProductCard = ({ product }: { product: Product }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollRef.current) {
-      const { current } = scrollRef;
-      // Scroll by roughly one item width
-      const scrollAmount = current.clientWidth / (window.innerWidth > 768 ? 2 : 1);
-      current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
-      });
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (isHovered && product.images.length > 1) {
+      interval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
+      }, 2000);
+    } else {
+      setCurrentImageIndex(0);
     }
-  };
+
+    return () => clearInterval(interval);
+  }, [isHovered, product.images.length]);
 
   return (
-    <section className={cn("bg-white border-b border-heritage-charcoal/5 py-12 relative group", className)}>
+    <div 
+      className="
+        w-full
+        bg-white
+        flex flex-col justify-between 
+        group/card hover:bg-heritage-bone/10 transition-colors
+        px-6 py-8
+        relative
+      "
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Image Container */}
+      <div className="aspect-[4/3] w-full mb-6 relative flex items-center justify-center p-4">
+        {product.images.map((img, idx) => (
+          <img 
+            key={img}
+            src={img} 
+            alt={`${product.name} view ${idx + 1}`} 
+            className={cn(
+              "absolute inset-0 w-full h-full object-contain mix-blend-multiply transition-opacity duration-500 ease-in-out p-4",
+              idx === currentImageIndex ? "opacity-100 scale-100" : "opacity-0 scale-95"
+            )}
+          />
+        ))}
+      </div>
+
+      {/* Info */}
+      <div className="space-y-1.5 text-center md:text-left relative z-10">
+        <h3 className="font-sans text-sm md:text-base font-bold text-heritage-charcoal uppercase tracking-wide leading-tight">
+          {product.name}
+        </h3>
+        <p className="font-sans text-sm font-medium text-heritage-clay">
+          {product.price}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export const ProductStrip = ({ title, products, className }: ProductStripProps) => {
+  // Limit to exactly 4 items for the grid
+  const displayProducts = products.slice(0, 4);
+
+  return (
+    <section className={cn("bg-white border-b border-heritage-charcoal/5 py-12", className)}>
       {/* Header */}
       {title && (
         <div className="max-w-[1800px] mx-auto px-6 md:px-8 mb-8">
@@ -42,76 +89,15 @@ export const ProductStrip = ({ title, products, className }: ProductStripProps) 
         </div>
       )}
 
-      {/* Navigation Arrows - Minimal Circular Outline */}
-      <button 
-        onClick={() => scroll('left')}
-        className="absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 w-10 h-10 rounded-full border border-heritage-charcoal/20 bg-white/90 backdrop-blur-sm flex items-center justify-center text-heritage-charcoal hover:bg-heritage-bone hover:border-heritage-charcoal transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0 shadow-sm"
-        aria-label="Scroll left"
-      >
-        <ArrowLeft className="w-4 h-4 stroke-[1.5]" />
-      </button>
-      <button 
-        onClick={() => scroll('right')}
-        className="absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 w-10 h-10 rounded-full border border-heritage-charcoal/20 bg-white/90 backdrop-blur-sm flex items-center justify-center text-heritage-charcoal hover:bg-heritage-bone hover:border-heritage-charcoal transition-all opacity-0 group-hover:opacity-100 shadow-sm"
-        aria-label="Scroll right"
-      >
-        <ArrowRight className="w-4 h-4 stroke-[1.5]" />
-      </button>
-
-      {/* Scroll Container */}
-      <div 
-        ref={scrollRef}
-        className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-      >
-        {products.map((product) => (
-          <div 
-            key={product.id} 
-            className="
-              /* Mobile: Large cards (80% width) */
-              min-w-[80vw] 
-              /* Desktop: 5 items visible (20% width) */
-              md:min-w-[20%] md:w-[20%] 
-              border-r border-heritage-charcoal/5 
-              flex-shrink-0 snap-start relative 
-              px-6 py-8 flex flex-col justify-between 
-              group/card hover:bg-heritage-bone/10 transition-colors
-            "
-          >
-            {/* Badge: Stamp-like, Top Right */}
-            {product.badge && (
-              <div className="absolute top-4 right-4 z-10">
-                <div className="border border-heritage-dusk/30 px-2 py-1 bg-heritage-bone/40 backdrop-blur-[2px]">
-                  <span className="text-[9px] font-bold text-heritage-dusk uppercase tracking-widest">
-                    Made for USA
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {/* Image - Centered Side Profile */}
-            <div className="aspect-[4/3] w-full mb-6 flex items-center justify-center p-4">
-              <img 
-                src={product.image} 
-                alt={product.name} 
-                className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover/card:scale-105"
-              />
-            </div>
-
-            {/* Info */}
-            <div className="space-y-1.5 text-center md:text-left">
-              <h3 className="font-sans text-sm md:text-base font-bold text-heritage-charcoal uppercase tracking-wide leading-tight">
-                {product.name}
-              </h3>
-              <p className="font-sans text-sm font-medium text-heritage-clay">
-                {product.price}
-              </p>
-            </div>
-          </div>
+      {/* Responsive Grid Container */}
+      {/* 
+         - grid-cols-1 (Mobile) -> grid-cols-2 (Tablet) -> grid-cols-4 (Desktop)
+         - gap-px with a background color creates the borders between items
+      */}
+      <div className="bg-heritage-charcoal/5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px border-t border-heritage-charcoal/5 lg:border-t-0">
+        {displayProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
         ))}
-        
-        {/* Spacer for right padding in scroll view */}
-        <div className="w-4 md:w-0 flex-shrink-0" />
       </div>
     </section>
   );

@@ -25,7 +25,7 @@ export const Footer = () => {
                 placeholder="your@email.address" 
                 className="flex-1 bg-white border border-heritage-charcoal/20 px-4 py-3 text-sm outline-none focus:border-heritage-charcoal transition-colors placeholder:text-heritage-charcoal/30"
               />
-              <button className="bg-black text-white px-6 py-3 text-xs font-bold uppercase tracking-widest hover:bg-heritage-blue transition-colors">
+              <button className="bg-heritage-charcoal text-white px-6 py-3 text-xs font-bold uppercase tracking-widest hover:bg-heritage-clay transition-colors">
                 Subscribe
               </button>
             </div>
@@ -89,7 +89,7 @@ export const Footer = () => {
             </div>
             <div>
               <span className="font-bold text-heritage-charcoal">Our Store:</span>
-              <span className="ml-2">14, Panscheel Park, New York</span>
+              <span className="ml-2">14, Liberty Ave, New York</span>
             </div>
           </div>
 

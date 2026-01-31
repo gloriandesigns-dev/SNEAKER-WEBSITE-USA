@@ -1,64 +1,50 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
+// Updated Image Assets for "Made for USA" section
+const NEW_IMAGES = {
+  IMG_1: "https://www.dropbox.com/scl/fi/2qtbwp2kv8hrfvs8051vh/ChatGPT-Image-Jan-29-2026-02_10_41-AM.webp?rlkey=45qocb7muwsfhdh0zjzjejrgr&st=qqwkv2kw&dl=0&raw=1",
+  IMG_2: "https://www.dropbox.com/scl/fi/0i8iiy8ze9eiq11j96iv1/ChatGPT-Image-Jan-29-2026-02_10_19-AM.webp?rlkey=wk2zakrz2mm80gaypxb0fs0xo&st=q0atdeq9&dl=0&raw=1",
+  IMG_3: "https://www.dropbox.com/scl/fi/l6gya0oq03efdou9pkmie/ChatGPT-Image-Jan-28-2026-11_11_53-PM.webp?rlkey=7mi5mja9a9hl6kbrinxehiaxx&st=mzu7930d&dl=0&raw=1",
+  IMG_4: "https://www.dropbox.com/scl/fi/zori7xr22bci8zdmu92se/ChatGPT-Image-Jan-29-2026-02_10_28-AM.webp?rlkey=xsqtn4unw4e2hov0nl30s1xte&st=20q49nga&dl=0&raw=1",
+};
+
 interface ProductInfo {
   name: string;
   price: string;
-  thumbnail: string;
 }
 
-interface MediaItem {
+interface GridItem {
   id: number;
-  type: 'lifestyle' | 'campaign';
-  mainImage: string;
+  image: string;
   product: ProductInfo;
   altText: string;
 }
 
-const mediaItems: MediaItem[] = [
+const gridItems: GridItem[] = [
   {
     id: 1,
-    type: 'lifestyle',
-    mainImage: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=2070&auto=format&fit=crop',
-    altText: "Desert Lifestyle Shot",
-    product: { 
-      name: "Canyon Runner", 
-      price: "$185.00", 
-      thumbnail: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop" 
-    }
+    image: NEW_IMAGES.IMG_1,
+    altText: "Desert Low Bone",
+    product: { name: "Desert Low Bone", price: "$155.00" }
   },
   {
     id: 2,
-    type: 'lifestyle',
-    mainImage: 'https://images.unsplash.com/photo-1603808033192-082d6919d3e1?q=80&w=2115&auto=format&fit=crop',
-    altText: "Urban Culture Shot",
-    product: { 
-      name: "1928 Turf", 
-      price: "$195.00", 
-      thumbnail: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=1974&auto=format&fit=crop" 
-    }
+    image: NEW_IMAGES.IMG_2,
+    altText: "Eagle Sun Yellow",
+    product: { name: "Eagle Sun Yellow", price: "$175.00" }
   },
   {
     id: 3,
-    type: 'lifestyle',
-    mainImage: 'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=2070&auto=format&fit=crop',
-    altText: "Heritage Detail Shot",
-    product: { 
-      name: "Baaz Noor", 
-      price: "$175.00", 
-      thumbnail: "https://images.unsplash.com/photo-1560769629-975e13f0c470?q=80&w=1974&auto=format&fit=crop" 
-    }
+    image: NEW_IMAGES.IMG_3,
+    altText: "Frontier Turf Olive",
+    product: { name: "Frontier Turf Olive", price: "$195.00" }
   },
   {
     id: 4,
-    type: 'lifestyle',
-    mainImage: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop',
-    altText: "Landscape Inspiration",
-    product: { 
-      name: "Naadu Heritage", 
-      price: "$210.00", 
-      thumbnail: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1998&auto=format&fit=crop" 
-    }
+    image: NEW_IMAGES.IMG_4,
+    altText: "Canyon Runner Red",
+    product: { name: "Canyon Runner Red", price: "$165.00" }
   }
 ];
 
@@ -72,43 +58,33 @@ export const MediaGrid = () => {
             Made for USA
           </h2>
           <a href="#" className="hidden md:flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-heritage-clay hover:text-heritage-brown transition-colors">
-            View Gallery <ArrowRight className="w-4 h-4" />
+            View Collection <ArrowRight className="w-4 h-4" />
           </a>
         </div>
 
-        {/* Responsive Grid Layout */}
+        {/* Responsive Grid Layout: 1 col mobile, 2 col tablet, 4 col desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {mediaItems.map((item) => (
+          {gridItems.map((item) => (
             <div 
               key={item.id} 
-              className="group relative aspect-[3/4] overflow-hidden bg-white cursor-pointer"
+              className="group relative aspect-[3/4] overflow-hidden bg-white cursor-pointer border border-heritage-charcoal/5"
             >
-              {/* Main Image with Hover Scale */}
-              <div className="w-full h-full overflow-hidden">
-                <img 
-                  src={item.mainImage} 
-                  alt={item.altText} 
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-              </div>
+              {/* Main Image - Object Cover for consistent aspect ratio */}
+              <img 
+                src={item.image} 
+                alt={item.altText} 
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
               
-              {/* Overlay: Visible on Hover (Desktop) / Always visible gradient on Mobile if needed, 
-                  but sticking to hover for cleaner look as requested */}
-              <div className="absolute inset-0 bg-gradient-to-t from-heritage-charcoal/90 via-heritage-charcoal/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+              {/* Overlay: Visible on Hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-heritage-charcoal/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                 <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-out">
-                  <div className="flex items-center gap-4 bg-white/10 backdrop-blur-md p-3 rounded-sm border border-white/10">
-                    <div className="w-12 h-12 bg-white rounded-sm overflow-hidden flex-shrink-0">
-                      <img 
-                        src={item.product.thumbnail} 
-                        alt={item.product.name} 
-                        className="w-full h-full object-cover mix-blend-multiply" 
-                      />
-                    </div>
-                    <div className="text-white">
-                      <p className="font-bold uppercase text-xs tracking-wide text-heritage-bone">{item.product.name}</p>
-                      <p className="text-heritage-sand text-[10px] mt-0.5">{item.product.price}</p>
-                    </div>
-                  </div>
+                  <p className="font-bold uppercase text-sm tracking-wide text-heritage-bone">
+                    {item.product.name}
+                  </p>
+                  <p className="text-heritage-sand text-xs mt-1 font-medium">
+                    {item.product.price}
+                  </p>
                 </div>
               </div>
             </div>
@@ -118,7 +94,7 @@ export const MediaGrid = () => {
         {/* Mobile View All Link */}
         <div className="mt-8 md:hidden flex justify-center">
           <a href="#" className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-heritage-clay hover:text-heritage-brown transition-colors">
-            View Gallery <ArrowRight className="w-4 h-4" />
+            View Collection <ArrowRight className="w-4 h-4" />
           </a>
         </div>
       </div>

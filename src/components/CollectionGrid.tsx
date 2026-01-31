@@ -1,29 +1,26 @@
 import React from 'react';
 
+// Renamed collections to American themes
 const collections = [
   {
     id: 1,
-    name: "Baaz Collection",
-    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop",
-    badge: true
+    name: "Canyon Series",
+    image: "https://www.dropbox.com/scl/fi/mkfs8pix3c28ew5lerqbh/ChatGPT-Image-Jan-28-2026-01_18_25-AM.webp?rlkey=wgqpvp9ntbb39f5wyrdgfd2he&st=eo9y9jm1&dl=0&raw=1", // Set 1
   },
   {
     id: 2,
-    name: "Karwaan Series",
-    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1974&auto=format&fit=crop",
-    badge: false
+    name: "Frontier Collection",
+    image: "https://www.dropbox.com/scl/fi/38x9ysmr9uoswj6fw9z5e/ChatGPT-Image-Jan-28-2026-11_11_55-PM.webp?rlkey=delyz2q81udhb7hwbjmecerc0&st=gkzfudqu&dl=0&raw=1", // Set 2
   },
   {
     id: 3,
-    name: "Heritage X Raga",
-    image: "https://images.unsplash.com/photo-1560769629-975e13f0c470?q=80&w=1974&auto=format&fit=crop",
-    badge: true
+    name: "Heritage X Liberty",
+    image: "https://www.dropbox.com/scl/fi/nvnqgyvimdg5m2rpzexzs/ChatGPT-Image-Jan-29-2026-02_10_17-AM.webp?rlkey=9m5n5c19w521g4xb2d07ckmu1&st=ydsk86v7&dl=0&raw=1", // Set 3
   },
   {
     id: 4,
-    name: "Shahi Collection",
-    image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=1974&auto=format&fit=crop",
-    badge: false
+    name: "Summit Collection",
+    image: "https://www.dropbox.com/scl/fi/ic9vxdkwjbcffzoca0p1c/ChatGPT-Image-Jan-29-2026-02_10_30-AM.webp?rlkey=bgycou32az8z3czwxupy2ks3h&st=9rz6wtyz&dl=0&raw=1", // Set 4
   }
 ];
 
@@ -41,7 +38,7 @@ export const CollectionGrid = () => {
         </div>
       </div>
 
-      {/* Static Grid */}
+      {/* Static Grid - Enforced lg:grid-cols-4 */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-heritage-charcoal/5">
         {collections.map((collection) => (
           <div key={collection.id} className="relative group p-8 pb-12 flex flex-col justify-between min-h-[400px]">
@@ -51,13 +48,6 @@ export const CollectionGrid = () => {
               <h3 className="font-sans text-lg font-bold text-heritage-charcoal uppercase tracking-wide">
                 {collection.name}
               </h3>
-              {collection.badge && (
-                <div className="border border-heritage-dusk/30 px-2 py-1 bg-heritage-bone/40">
-                  <span className="text-[9px] font-bold text-heritage-dusk uppercase tracking-widest leading-none block">
-                    Made for<br/>USA
-                  </span>
-                </div>
-              )}
             </div>
 
             {/* Image */}
@@ -68,8 +58,6 @@ export const CollectionGrid = () => {
                 className="w-full h-auto max-h-[200px] object-contain mix-blend-multiply filter contrast-110"
               />
             </div>
-
-            {/* Static - No hover effects requested */}
           </div>
         ))}
       </div>

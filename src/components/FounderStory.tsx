@@ -6,15 +6,15 @@ export const FounderStory = () => {
       {/* Header */}
       <div className="absolute top-0 left-0 w-full z-20 p-6 md:p-10 bg-gradient-to-b from-black/50 to-transparent">
         <h2 className="font-sans text-white text-xl md:text-2xl uppercase tracking-widest font-bold">
-          From the <span className="text-heritage-blue">Founder</span>
+          From the <span className="text-heritage-tan">Founder</span>
         </h2>
       </div>
 
       {/* Cinematic Image (Simulating Video Frame) */}
       <div className="absolute inset-0 w-full h-full">
         <img 
-          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=2574&auto=format&fit=crop" 
-          alt="Founder Walking" 
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop" 
+          alt="Founder Walking in Nature" 
           className="w-full h-full object-cover object-center opacity-80"
         />
         {/* Film Grain Overlay */}
@@ -28,7 +28,7 @@ export const FounderStory = () => {
         </p>
       </div>
 
-      {/* Play Button Hint (Optional, keeps it static but implies video) */}
+      {/* Play Button Hint */}
       <div className="absolute bottom-6 right-6 z-20">
          <div className="w-10 h-10 border border-white/30 rounded-full flex items-center justify-center backdrop-blur-md">
             <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1"></div>

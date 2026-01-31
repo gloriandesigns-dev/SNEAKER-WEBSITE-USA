@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const products = [
-  { id: 1, name: "Gully Number 001 - Barfi Burgundy", price: "$185.00", image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop" },
-  { id: 2, name: "1928 Turf Olive", price: "$195.00", image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1974&auto=format&fit=crop" },
-  { id: 3, name: "Baaz Noor Yellow", price: "$175.00", image: "https://images.unsplash.com/photo-1560769629-975e13f0c470?q=80&w=1974&auto=format&fit=crop" },
-  { id: 4, name: "Naadu Heritage", price: "$210.00", image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1998&auto=format&fit=crop" },
+  { id: 1, name: "Canyon Number 001", price: "$185.00", image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop" },
+  { id: 2, name: "Frontier Turf Olive", price: "$195.00", image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1974&auto=format&fit=crop" },
+  { id: 3, name: "Eagle Sun Yellow", price: "$175.00", image: "https://images.unsplash.com/photo-1560769629-975e13f0c470?q=80&w=1974&auto=format&fit=crop" },
+  { id: 4, name: "Dakota Heritage", price: "$210.00", image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1998&auto=format&fit=crop" },
   { id: 5, name: "Canyon Runner Red", price: "$165.00", image: "https://images.unsplash.com/photo-1562183241-b937e95585b6?q=80&w=1965&auto=format&fit=crop" },
 ];
 
