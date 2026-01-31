@@ -15,6 +15,8 @@ import { Footer } from './components/Footer';
 import { BestSellers } from './pages/BestSellers';
 import { MadeForUSA } from './pages/MadeForUSA';
 import { CategoryPage } from './pages/CategoryPage';
+import { Slides } from './pages/Slides';
+import { Apparel } from './pages/Apparel';
 
 // --- IMAGE ASSETS ---
 const SET_1 = [
@@ -82,6 +84,22 @@ const newArrivals: Product[] = [
   { id: 11, name: "Clay Court", price: "$170.00", images: SET_4 },
 ];
 
+// Mock Apparel Data (Reusing images as placeholders, but named appropriately)
+const apparelProducts: Product[] = [
+  { id: 101, name: "Heritage Tee - Bone", price: "$45.00", images: SET_1 },
+  { id: 102, name: "Canyon Hoodie - Clay", price: "$85.00", images: SET_2 },
+  { id: 103, name: "Workwear Jacket", price: "$120.00", images: SET_3 },
+  { id: 104, name: "Utility Cargo Pant", price: "$95.00", images: SET_4 },
+  { id: 105, name: "Logo Cap - Navy", price: "$35.00", images: SET_5 },
+];
+
+// Mock Slides Data
+const slideProducts: Product[] = [
+  { id: 201, name: "Canyon Slide - Tan", price: "$55.00", images: SET_6 },
+  { id: 202, name: "Recovery Slide - Black", price: "$55.00", images: SET_7 },
+  { id: 203, name: "Heritage Mule", price: "$75.00", images: SET_1 },
+];
+
 // Combine for larger grids
 const allProducts = [...featuredProducts, ...newArrivals];
 
@@ -104,6 +122,10 @@ function App() {
         return <BestSellers products={allProducts} />;
       case "made-for-usa":
         return <MadeForUSA products={allProducts} />;
+      case "slides":
+        return <Slides products={slideProducts} />;
+      case "apparel":
+        return <Apparel products={apparelProducts} />;
       case "everyday":
         return <CategoryPage title="Everyday Sneakers" products={everydayProducts} />;
       case "functional":

@@ -27,6 +27,7 @@ const DROPDOWN_THUMBS = {
 export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 10);
@@ -36,10 +37,10 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
     { name: "Bestsellers", id: "bestsellers" },
     { name: "Made for USA", id: "made-for-usa" },
     { name: "Sneakers", id: "sneakers", hasDropdown: true },
-    { name: "Slides", id: "home" }, // Placeholder
-    { name: "Apparel", id: "home" }, // Placeholder
-    { name: "Accessories", id: "home" }, // Placeholder
-    { name: "Story", id: "home" }, // Placeholder
+    { name: "Slides", id: "slides" },
+    { name: "Apparel", id: "apparel" },
+    { name: "Accessories", id: "accessories" }, // Placeholder page
+    { name: "Story", id: "story" }, // Placeholder page
   ];
 
   return (
@@ -48,6 +49,7 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
         "sticky top-0 z-40 transition-all duration-300 ease-in-out px-6 md:px-8 h-[80px] flex items-center border-b border-transparent",
         isScrolled ? "bg-heritage-bone/95 backdrop-blur-sm border-heritage-charcoal/5" : "bg-heritage-bone"
       )}
+      onMouseLeave={() => setActiveDropdown(null)}
     >
       <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between">
         
@@ -61,7 +63,11 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
         {/* CENTER: Navigation Links */}
         <div className="hidden lg:flex items-center gap-8 h-full">
           {navLinks.map((link) => (
-            <div key={link.name} className="h-full flex items-center group relative">
+            <div 
+              key={link.name} 
+              className="h-full flex items-center group relative"
+              onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.id)}
+            >
               <button 
                 onClick={() => !link.hasDropdown && onNavigate(link.id)}
                 className={cn(
@@ -76,15 +82,22 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
               </button>
 
               {/* MEGA MENU DROPDOWN */}
-              {link.hasDropdown && (
-                <div className="absolute top-[80px] left-1/2 -translate-x-1/2 w-screen max-w-[100vw] bg-heritage-bone border-t border-b border-heritage-charcoal/5 shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
+              {link.hasDropdown && activeDropdown === link.id && (
+                <div 
+                  className="fixed top-[80px] left-0 w-full bg-heritage-bone border-t border-b border-heritage-charcoal/5 shadow-sm animate-in fade-in slide-in-from-top-2 duration-200 z-50"
+                  onMouseEnter={() => setActiveDropdown(link.id)}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
                   <div className="max-w-[1600px] mx-auto px-8 py-12">
                     <div className="grid grid-cols-3 gap-12">
                       
                       {/* Column 1: Everyday */}
                       <div 
                         className="cursor-pointer group/col"
-                        onClick={() => onNavigate('everyday')}
+                        onClick={() => {
+                          onNavigate('everyday');
+                          setActiveDropdown(null);
+                        }}
                       >
                         <h3 className="font-sans text-lg font-extrabold text-heritage-charcoal uppercase tracking-wide mb-6 border-b border-heritage-charcoal/10 pb-2 group-hover/col:text-heritage-clay transition-colors">
                           Everyday Sneakers
@@ -101,7 +114,10 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
                       {/* Column 2: Functional */}
                       <div 
                         className="cursor-pointer group/col"
-                        onClick={() => onNavigate('functional')}
+                        onClick={() => {
+                          onNavigate('functional');
+                          setActiveDropdown(null);
+                        }}
                       >
                         <h3 className="font-sans text-lg font-extrabold text-heritage-charcoal uppercase tracking-wide mb-6 border-b border-heritage-charcoal/10 pb-2 group-hover/col:text-heritage-clay transition-colors">
                           Functional Sneakers
@@ -118,7 +134,10 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
                       {/* Column 3: Design-led */}
                       <div 
                         className="cursor-pointer group/col"
-                        onClick={() => onNavigate('design-led')}
+                        onClick={() => {
+                          onNavigate('design-led');
+                          setActiveDropdown(null);
+                        }}
                       >
                         <h3 className="font-sans text-lg font-extrabold text-heritage-charcoal uppercase tracking-wide mb-6 border-b border-heritage-charcoal/10 pb-2 group-hover/col:text-heritage-clay transition-colors">
                           Design-led Sneakers

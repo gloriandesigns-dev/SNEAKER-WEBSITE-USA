@@ -6,9 +6,17 @@ interface ProductCardProps {
   product: Product;
   badgeText?: string;
   className?: string;
+  aspectRatio?: string; // Allow custom aspect ratios (e.g., "aspect-[3/4]")
+  showSaleBadge?: boolean;
 }
 
-export const ProductCard = ({ product, badgeText, className }: ProductCardProps) => {
+export const ProductCard = ({ 
+  product, 
+  badgeText, 
+  className, 
+  aspectRatio = "aspect-[4/3]",
+  showSaleBadge = false
+}: ProductCardProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -35,7 +43,7 @@ export const ProductCard = ({ product, badgeText, className }: ProductCardProps)
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Badge */}
+      {/* Top Badge (e.g., Made for USA) */}
       {badgeText && (
         <div className="absolute top-0 right-0 z-20">
           <div className="bg-heritage-dusk text-white text-[10px] font-bold px-3 py-1.5 uppercase tracking-wider shadow-sm">
@@ -44,8 +52,17 @@ export const ProductCard = ({ product, badgeText, className }: ProductCardProps)
         </div>
       )}
 
+      {/* Sale Badge (Bottom Left usually, or Top Left) */}
+      {showSaleBadge && (
+        <div className="absolute top-4 left-4 z-20">
+           <div className="bg-heritage-clay text-white text-[10px] font-bold px-2 py-1 uppercase tracking-wider">
+             Save $20
+           </div>
+        </div>
+      )}
+
       {/* Image Container */}
-      <div className="aspect-[4/3] w-full mb-6 relative flex items-center justify-center p-2">
+      <div className={cn("w-full mb-6 relative flex items-center justify-center p-2 overflow-hidden", aspectRatio)}>
         {product.images.map((img, idx) => (
           <img 
             key={img}
@@ -67,9 +84,16 @@ export const ProductCard = ({ product, badgeText, className }: ProductCardProps)
         <h3 className="font-sans text-sm font-bold text-heritage-charcoal uppercase tracking-wide leading-tight min-h-[40px]">
           {product.name}
         </h3>
-        <p className="font-sans text-sm font-medium text-heritage-charcoal">
-          {product.price}
-        </p>
+        <div className="flex items-center gap-2">
+          <p className="font-sans text-sm font-medium text-heritage-charcoal">
+            {product.price}
+          </p>
+          {showSaleBadge && (
+             <p className="font-sans text-xs font-medium text-heritage-charcoal/40 line-through">
+               $245.00
+             </p>
+          )}
+        </div>
       </div>
     </div>
   );
