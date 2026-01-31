@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Urbanist', 'sans-serif'], // Changed to Urbanist as requested
+        sans: ['Urbanist', 'sans-serif'],
       },
       colors: {
         heritage: {
@@ -17,8 +17,9 @@ export default {
           ochre: '#C99E55',
           sage: '#8A9A85',
           dusk: '#2C3E50',
-          charcoal: '#111111', // Darker for bold contrast
+          charcoal: '#111111',
           brown: '#3E3228',
+          blue: '#0047AB', // Added Cobalt/Royal Blue for the ticker
         }
       },
       backgroundImage: {

@@ -5,7 +5,13 @@ import { Hero } from './components/Hero';
 import { IconStrip } from './components/IconStrip';
 import { ProductStrip } from './components/ProductStrip';
 import { MediaGrid } from './components/MediaGrid';
-import { ContentSection } from './components/ContentSection';
+import { CollectionGrid } from './components/CollectionGrid';
+import { BlueTicker } from './components/BlueTicker';
+import { Testimonials } from './components/Testimonials';
+import { StoreLocator } from './components/StoreLocator';
+import { FeaturedLogos } from './components/FeaturedLogos';
+import { FounderStory } from './components/FounderStory';
+import { Footer } from './components/Footer';
 
 // Mock Data
 const featuredProducts = [
@@ -43,12 +49,27 @@ function App() {
         {/* SECTION 3: Media Grid */}
         <MediaGrid />
         
-        <ContentSection />
+        {/* SECTION 4: Static Collections */}
+        <CollectionGrid />
+        
+        {/* SECTION 5: Blue Ticker */}
+        <BlueTicker />
+        
+        {/* SECTION 6: Testimonials */}
+        <Testimonials />
+        
+        {/* SECTION 7: Store Locator */}
+        <StoreLocator />
+
+        {/* SECTION 8: Featured Logos */}
+        <FeaturedLogos />
+
+        {/* SECTION 9: Founder Story */}
+        <FounderStory />
       </main>
       
-      <footer className="bg-heritage-charcoal text-heritage-bone py-12 px-6 text-center">
-        <p className="font-sans text-xs tracking-widest opacity-60">© 2025 KANIEN. ALL RIGHTS RESERVED.</p>
-      </footer>
+      {/* SECTION 10: Footer */}
+      <Footer />
     </div>
   );
 }
