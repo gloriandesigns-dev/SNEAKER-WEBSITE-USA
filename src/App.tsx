@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Ticker } from './components/Ticker';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -12,6 +12,9 @@ import { StoreLocator } from './components/StoreLocator';
 import { FeaturedLogos } from './components/FeaturedLogos';
 import { FounderStory } from './components/FounderStory';
 import { Footer } from './components/Footer';
+import { BestSellers } from './pages/BestSellers';
+import { MadeForUSA } from './pages/MadeForUSA';
+import { CategoryPage } from './pages/CategoryPage';
 
 // --- IMAGE ASSETS ---
 const SET_1 = [
@@ -62,7 +65,6 @@ const SET_7 = [
 ];
 
 // --- MOCK DATA MAPPING ---
-// Renamed to American Heritage themes
 const featuredProducts: Product[] = [
   { id: 1, name: "Canyon Number 001", price: "$185.00", images: SET_1 },
   { id: 2, name: "Frontier Turf Olive", price: "$195.00", images: SET_2 },
@@ -80,44 +82,61 @@ const newArrivals: Product[] = [
   { id: 11, name: "Clay Court", price: "$170.00", images: SET_4 },
 ];
 
+// Combine for larger grids
+const allProducts = [...featuredProducts, ...newArrivals];
+
+// Subsets for categories
+const everydayProducts = [featuredProducts[0], featuredProducts[1], newArrivals[0], newArrivals[1]];
+const functionalProducts = [featuredProducts[2], featuredProducts[3], newArrivals[2], newArrivals[3]];
+const designProducts = [featuredProducts[4], featuredProducts[5], newArrivals[4], featuredProducts[0]];
+
 function App() {
+  const [currentPage, setCurrentPage] = useState("home");
+
+  // Scroll to top on page change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
+  const renderContent = () => {
+    switch (currentPage) {
+      case "bestsellers":
+        return <BestSellers products={allProducts} />;
+      case "made-for-usa":
+        return <MadeForUSA products={allProducts} />;
+      case "everyday":
+        return <CategoryPage title="Everyday Sneakers" products={everydayProducts} />;
+      case "functional":
+        return <CategoryPage title="Functional Sneakers" products={functionalProducts} />;
+      case "design-led":
+        return <CategoryPage title="Design-led Sneakers" products={designProducts} />;
+      case "home":
+      default:
+        return (
+          <>
+            <Hero />
+            <IconStrip />
+            <ProductStrip products={featuredProducts} />
+            <ProductStrip title="New Arrivals" products={newArrivals} className="border-t-0" />
+            <MediaGrid />
+            <CollectionGrid />
+            <HeritageTicker />
+            <Testimonials />
+            <StoreLocator />
+            <FeaturedLogos />
+            <FounderStory />
+          </>
+        );
+    }
+  };
+
   return (
     <div className="min-h-screen bg-heritage-bone selection:bg-heritage-clay selection:text-white">
       <Ticker />
-      <Navbar />
+      <Navbar onNavigate={setCurrentPage} currentPage={currentPage} />
       <main>
-        <Hero />
-        <IconStrip />
-        
-        {/* SECTION 1: Featured Products Strip */}
-        <ProductStrip products={featuredProducts} />
-        
-        {/* SECTION 2: New Arrivals */}
-        <ProductStrip title="New Arrivals" products={newArrivals} className="border-t-0" />
-        
-        {/* SECTION 3: Media Grid */}
-        <MediaGrid />
-        
-        {/* SECTION 4: Static Collections */}
-        <CollectionGrid />
-        
-        {/* SECTION 5: Heritage Ticker */}
-        <HeritageTicker />
-        
-        {/* SECTION 6: Testimonials */}
-        <Testimonials />
-        
-        {/* SECTION 7: Store Locator */}
-        <StoreLocator />
-
-        {/* SECTION 8: Featured Logos */}
-        <FeaturedLogos />
-
-        {/* SECTION 9: Founder Story */}
-        <FounderStory />
+        {renderContent()}
       </main>
-      
-      {/* SECTION 10: Footer */}
       <Footer />
     </div>
   );
